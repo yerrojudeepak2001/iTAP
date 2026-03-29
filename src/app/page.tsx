@@ -1,65 +1,729 @@
+"use client";
+
 import Image from "next/image";
+import { motion } from "framer-motion";
+import { type ReactNode, useEffect, useRef } from "react";
+
+import ServiceCard from "./components/ServiceCard";
+import metaLogo from "./meta.png";
+import verizonLogo from "./verizon logo.png";
+
+const serviceCards = [
+  {
+    icon: "[Cloud]",
+    title: "Cloud & Infrastructure",
+    description:
+      "Scalable, secure, and resilient cloud platforms for modern enterprises. We modernize your environment without breaking core business workflows.",
+    highlights: [
+      "Cloud migration planning",
+      "Kubernetes and containerization",
+      "Disaster recovery and DR drills",
+      "Performance and cost optimization",
+    ],
+  },
+  {
+    icon: "[Digital]",
+    title: "Digital Product Engineering",
+    description:
+      "Design and build resilient digital products across web, mobile, and backend stacks with measurable delivery speed and reliability.",
+    highlights: [
+      "Product architecture and roadmap",
+      "Microservices and API-first design",
+      "CI/CD and automated testing",
+      "Monitoring and observability",
+    ],
+  },
+  {
+    icon: "[Shield]",
+    title: "Security & Compliance",
+    description:
+      "Protect systems, data, and customer trust with policy-driven controls tuned to real operational risks, not theory.",
+    highlights: [
+      "Threat modeling and risk assessments",
+      "Security operations readiness",
+      "Identity and access controls",
+      "Compliance documentation support",
+    ],
+  },
+  {
+    icon: "[Data]",
+    title: "Data & AI",
+    description:
+      "Turn enterprise data into decisions with reliable pipelines and practical analytics use cases built for measurable business impact.",
+    highlights: [
+      "Data lake and warehouse design",
+      "Automated analytics dashboards",
+      "Machine-learning model deployment",
+      "AI governance and MLOps readiness",
+    ],
+  },
+  {
+    icon: "[Systems]",
+    title: "Enterprise Systems",
+    description:
+      "Integrate, automate, and connect core enterprise apps so teams can deliver faster with fewer manual handoffs.",
+    highlights: [
+      "ERP, CRM, and finance systems",
+      "API integrations and middleware",
+      "RPA workflows and process automation",
+      "Legacy modernization strategy",
+    ],
+  },
+  {
+    icon: "[Strategy]",
+    title: "IT Strategy & Managed Services",
+    description:
+      "Steer transformation with practical roadmaps, vendor-neutral decisions, and reliable ongoing support models.",
+    highlights: [
+      "Digital strategy workshops",
+      "Team capability uplift and coaching",
+      "SLA-backed managed operations",
+      "24/7 platform and incident response",
+    ],
+  },
+];
+
+const whyCards = [
+  "Business-first delivery model",
+  "Outcome-based architecture",
+  "Continuous support and optimization",
+];
+
+const deliveryOverview = [
+  {
+    title: "Specialization",
+    description: "Business-centric digital services across cloud, products, data, and operations.",
+  },
+  {
+    title: "Delivery",
+    description: "Agile execution from strategy to launch with measurable milestones.",
+  },
+  {
+    title: "Team",
+    description: "Hands-on technical guidance focused on practical business outcomes.",
+  },
+];
+
+type Capability = {
+  title: string;
+  category: string;
+  description: string;
+  logo: ReactNode;
+  logoColorClassName: string;
+  logoSurfaceClassName: string;
+  compactLogo?: boolean;
+};
+
+const capabilities: Capability[] = [
+  {
+    title: "Meta",
+    category: "Social platforms",
+    description: "Consumer-scale feeds, experimentation loops, and platform engineering patterns.",
+    logoColorClassName: "",
+    logoSurfaceClassName: "bg-[#eef4ff] ring-1 ring-[#0866ff]/12",
+    compactLogo: true,
+    logo: (
+      <div className="flex h-full w-full items-center justify-center">
+        <Image
+          src={metaLogo}
+          alt="Meta"
+          className="h-full w-full object-contain p-1"
+          draggable={false}
+        />
+      </div>
+    ),
+  },
+  {
+    title: "Mastercard",
+    category: "Payments and fintech",
+    description: "Secure transaction systems, payment network reliability, and data-driven customer experiences.",
+    logoColorClassName: "",
+    logoSurfaceClassName: "bg-[#fff4ef] ring-1 ring-[#eb001b]/15",
+    compactLogo: true,
+    logo: (
+      <div className="flex h-full w-full items-center justify-center">
+        <svg viewBox="0 0 64 40" className="h-10 w-14" aria-hidden="true">
+          <circle cx="24" cy="20" r="12" fill="#EB001B" />
+          <circle cx="40" cy="20" r="12" fill="#F79E1B" />
+          <path
+            d="M32 10.5a12.1 12.1 0 0 0 0 19 12.1 12.1 0 0 0 0-19Z"
+            fill="#FF5F00"
+          />
+        </svg>
+      </div>
+    ),
+  },
+  {
+    title: "Apple",
+    category: "Product ecosystem",
+    description: "Hardware-software integration with a strong quality bar and polished UX execution.",
+    logoColorClassName: "text-black",
+    logoSurfaceClassName: "bg-white ring-1 ring-[#e8e8ea]",
+    compactLogo: true,
+    logo: (
+      <div className="flex h-full w-full items-center justify-center">
+        <svg viewBox="0 0 24 24" fill="currentColor" className="h-10 w-10" aria-hidden="true">
+          <path
+            d="M16.365 1.43c0 1.14-.418 2.193-1.244 3.16-.994 1.17-2.2 1.85-3.474 1.75-.02-.13-.03-.27-.03-.42 0-1.1.48-2.27 1.31-3.23.42-.49.95-.9 1.59-1.22.64-.32 1.25-.5 1.83-.54.02.16.03.32.03.5zm3.08 15.19c-.26.6-.57 1.18-.92 1.73-.47.73-.85 1.24-1.15 1.52-.45.44-.93.67-1.44.69-.37.02-.82-.1-1.34-.3-.53-.2-1.02-.3-1.47-.3-.48 0-.99.1-1.52.3-.53.2-.96.3-1.28.31-.5.02-.98-.2-1.43-.66-.33-.34-.71-.87-1.14-1.61-.46-.78-.84-1.69-1.13-2.73-.31-1.1-.47-2.16-.47-3.18 0-1.17.25-2.18.75-3.03.4-.68.94-1.22 1.63-1.62.69-.4 1.43-.6 2.22-.6.39 0 .91.12 1.56.35.65.23 1.06.35 1.23.35.13 0 .57-.14 1.32-.41.71-.25 1.3-.36 1.78-.33 1.3.1 2.28.62 2.95 1.55-1.16.7-1.73 1.68-1.72 2.93.01.97.35 1.78 1.02 2.43.31.3.66.53 1.05.7-.08.24-.17.48-.27.71z"
+          />
+        </svg>
+      </div>
+    ),
+  },
+  {
+    title: "LPL Financial",
+    category: "Wealth management",
+    description: "Advisor platforms, financial data workflows, and secure digital experiences for investment services.",
+    logoColorClassName: "",
+    logoSurfaceClassName: "bg-white ring-1 ring-[#102a67]/15",
+    compactLogo: true,
+    logo: (
+      <div className="flex h-full w-full items-center justify-center">
+        <svg
+          viewBox="0 0 100 100"
+          className="h-14 w-14 text-[#102a67]"
+          fill="currentColor"
+          aria-hidden="true"
+        >
+          <path d="M18 12h56v56H62V24H18V12Z" />
+          <path d="M18 36h34v32H40V48H18V36Z" />
+          <path d="M18 58h14v14H18V58Z" />
+        </svg>
+      </div>
+    ),
+  },
+  {
+    title: "Edward Jones",
+    category: "Financial advisory",
+    description: "Client advisory platforms, portfolio workflows, and trusted digital experiences for wealth planning.",
+    logoColorClassName: "",
+    logoSurfaceClassName: "bg-[#f6c31c] ring-1 ring-[#1f2430]/10",
+    compactLogo: true,
+    logo: (
+      <div className="flex h-full w-full flex-col items-center justify-center leading-none text-[#111827]">
+        <span className="font-serif text-[0.92rem] tracking-[-0.05em]">
+          Edward
+        </span>
+        <span className="-mt-0.5 text-[0.98rem] font-black tracking-[-0.07em]">
+          Jones
+        </span>
+      </div>
+    ),
+  },
+  {
+    title: "Intuit",
+    category: "Fintech platforms",
+    description: "Tax, accounting, and financial workflow systems built for reliability, trust, and product clarity.",
+    logoColorClassName: "",
+    logoSurfaceClassName: "bg-[#f2f7ff] ring-1 ring-[#236CFF]/14",
+    compactLogo: true,
+    logo: (
+      <div className="flex h-full w-full items-center justify-center">
+        <span className="text-base font-semibold tracking-[-0.04em] text-[#236CFF]">intuit</span>
+      </div>
+    ),
+  },
+  {
+    title: "Verizon",
+    category: "Telecom platforms",
+    description: "Network-scale systems, customer operations, and resilient digital services for connected experiences.",
+    logoColorClassName: "",
+    logoSurfaceClassName: "bg-white ring-1 ring-slate-200",
+    compactLogo: true,
+    logo: (
+      <div className="flex h-full w-full items-center justify-center p-1">
+        <Image
+          src={verizonLogo}
+          alt="Verizon"
+          className="h-full w-full object-contain"
+          draggable={false}
+        />
+      </div>
+    ),
+  },
+  {
+    title: "Optum",
+    category: "Healthcare platforms",
+    description: "Care delivery systems, health data workflows, and secure digital experiences across modern healthcare operations.",
+    logoColorClassName: "",
+    logoSurfaceClassName: "bg-[#fff7f0] ring-1 ring-[#f28c28]/14",
+    compactLogo: true,
+    logo: (
+      <div className="flex h-full w-full items-center justify-center">
+        <svg viewBox="0 0 100 100" className="h-12 w-12" aria-hidden="true">
+          <circle cx="50" cy="50" r="34" fill="none" stroke="#ff642b" strokeWidth="20" />
+        </svg>
+      </div>
+    ),
+  },
+];
+
+const slidingCapabilities = [...capabilities, ...capabilities];
+
+const techStack = [
+  {
+    title: "Core Platforms",
+    technologies: ["AWS", "Azure", "GCP", "Vercel"],
+  },
+  {
+    title: "Frameworks",
+    technologies: ["Next.js", "React", "Node.js", "Spring Boot"],
+  },
+  {
+    title: "Data & AI",
+    technologies: ["PostgreSQL", "Snowflake", "Python", "TensorFlow"],
+  },
+  {
+    title: "Operations",
+    technologies: ["Docker", "Kubernetes", "Terraform", "GitHub Actions"],
+  },
+];
+
+const heroVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.7,
+      ease: "easeOut" as const,
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const heroItemVariants = {
+  hidden: { opacity: 0, x: -24 },
+  visible: { opacity: 1, x: 0 },
+};
+
+const staggerContainer = {
+  hidden: { opacity: 1 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 24, scale: 0.99 },
+  visible: (index: number) => ({
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.55,
+      delay: index * 0.08,
+      ease: "easeOut" as const,
+    },
+  }),
+};
 
 export default function Home() {
+  const capabilitiesTrackRef = useRef<HTMLDivElement | null>(null);
+  const capabilitiesPausedRef = useRef(false);
+
+  useEffect(() => {
+    const track = capabilitiesTrackRef.current;
+    if (!track) return;
+
+    let frameId = 0;
+    let lastTimestamp = 0;
+    const scrollSpeed = 0.1;
+    let currentScroll = track.scrollLeft;
+
+    const pause = () => {
+      capabilitiesPausedRef.current = true;
+    };
+
+    const resume = () => {
+      capabilitiesPausedRef.current = false;
+    };
+
+    track.addEventListener("mouseenter", pause);
+    track.addEventListener("mouseleave", resume);
+
+    const step = (timestamp: number) => {
+      if (!lastTimestamp) {
+        lastTimestamp = timestamp;
+      }
+
+      const delta = timestamp - lastTimestamp;
+      lastTimestamp = timestamp;
+
+      if (!capabilitiesPausedRef.current) {
+        currentScroll += delta * scrollSpeed;
+      }
+
+      if (currentScroll >= track.scrollWidth / 2) {
+        currentScroll = 0;
+      }
+
+      track.scrollLeft = currentScroll;
+      frameId = window.requestAnimationFrame(step);
+    };
+
+    frameId = window.requestAnimationFrame(step);
+
+    return () => {
+      track.removeEventListener("mouseenter", pause);
+      track.removeEventListener("mouseleave", resume);
+      window.cancelAnimationFrame(frameId);
+    };
+  }, []);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <main
+      className="relative min-h-screen overflow-hidden text-slate-900"
+      style={{
+        background: "linear-gradient(135deg, #f7faff 0%, #d7e6ff 44%, #c5d8fb 100%)",
+      }}
+    >
+      <div className="pointer-events-none absolute -left-24 -top-24 h-80 w-80 rounded-full bg-[color:var(--brand-orange)]/28 blur-3xl" />
+      <div className="pointer-events-none absolute -right-16 top-8 h-72 w-72 rounded-full bg-[color:var(--brand-blue)]/28 blur-3xl" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-[radial-gradient(ellipse_at_50%_100%,rgba(31,86,179,0.24),transparent_72%)]" />
+      <div id="solutions" className="h-0 w-0" />
+      <div id="industries" className="h-0 w-0" />
+      <motion.section
+        initial="hidden"
+        animate="visible"
+        variants={heroVariants}
+        className="relative mx-auto max-w-6xl overflow-visible px-6 pt-20 pb-10"
+      >
+        <motion.p
+          variants={heroItemVariants}
+          className="relative text-base font-semibold uppercase tracking-[0.2em] text-[color:var(--brand-blue)]"
+        >
+          iTAP Technologies
+        </motion.p>
+        <motion.h1
+          variants={heroItemVariants}
+          className="relative mt-4 max-w-4xl text-4xl font-bold leading-tight md:text-6xl"
+        >
+          Building a better digital future with smarter, secure IT systems
+        </motion.h1>
+        <motion.p
+          variants={heroItemVariants}
+          className="relative mt-7 max-w-2xl text-lg text-[color:var(--text-muted)]"
+        >
+          We partner with enterprises and growth-stage teams to launch secure,
+          scalable, and cost-aware digital products that move business outcomes.
+        </motion.p>
+        <div className="relative mt-6 flex flex-wrap items-center gap-4">
+          <motion.a
+            href="#services"
+            variants={heroItemVariants}
+            whileHover={{ scale: 1.03 }}
+            transition={{ type: "spring", stiffness: 260, damping: 18 }}
+            className="brand-button rounded-xl px-6 py-3 font-semibold transition hover:opacity-90"
+          >
+            Explore Services
+          </motion.a>
+          <motion.a
+            href="#contact"
+            variants={heroItemVariants}
+            whileHover={{ scale: 1.03 }}
+            transition={{ type: "spring", stiffness: 260, damping: 18 }}
+            className="rounded-xl border border-[color:var(--brand-blue)] bg-white px-6 py-3 font-semibold text-[color:var(--brand-blue)] transition hover:bg-[color:var(--brand-blue)] hover:text-white"
+          >
+            Get in touch
+          </motion.a>
+        </div>
+
+        <div className="relative mt-10">
+          <p className="text-base font-semibold uppercase tracking-[0.2em] text-[color:var(--brand-blue)]">Core capabilities</p>
+          <p className="mt-3 max-w-3xl text-lg text-slate-700">
+            We build with patterns proven by the world&apos;s most demanding product and
+            platform companies, then adapt them to practical enterprise delivery.
           </p>
+          <div className="relative mt-6 pt-7 pb-5">
+            <div
+              ref={capabilitiesTrackRef}
+              className="overflow-x-hidden pt-4 pb-4"
+            >
+              <div className="flex w-max gap-5 pb-1">
+                {slidingCapabilities.map((capability, index) => (
+                  <motion.article
+                    key={`${capability.title}-${index}`}
+                    variants={cardVariants}
+                    custom={index % capabilities.length}
+                    whileHover={{
+                      scale: 1.06,
+                      y: 0,
+                      boxShadow: "0 24px 48px rgba(15,23,42,0.22)",
+                    }}
+                    transition={{ type: "spring", stiffness: 240, damping: 20 }}
+                    style={{ transformOrigin: "center top" }}
+                    className="crm-card-surface group relative z-0 flex min-h-[12.5rem] w-[15rem] flex-none flex-col overflow-visible rounded-[1.5rem] border border-transparent px-5 py-4 transition-all duration-300 group-hover:min-h-[15.5rem] group-hover:border-[color:var(--brand-blue)]/20 group-hover:bg-white/95 md:w-[16rem] hover:z-20"
+                  >
+                    <div className="pointer-events-none absolute inset-x-6 top-0 h-20 bg-[radial-gradient(circle_at_top,rgba(31,86,179,0.08),transparent_72%)]" />
+                    <div className="relative flex w-full items-center justify-between gap-4">
+                      {capability.compactLogo ? (
+                        <div
+                          className={`flex h-[4.25rem] w-[4.25rem] flex-none items-center justify-center rounded-[1.15rem] shadow-[0_8px_18px_rgba(15,23,42,0.06)] ${capability.logoSurfaceClassName}`}
+                        >
+                          <div className={capability.logoColorClassName}>{capability.logo}</div>
+                        </div>
+                      ) : (
+                        <div
+                          className={`flex h-14 min-w-[8.75rem] items-center rounded-2xl px-4 ${
+                            capability.title === "Meta"
+                              ? "justify-center"
+                              : "justify-start"
+                          } ${capability.logoSurfaceClassName}`}
+                        >
+                          <div className={capability.logoColorClassName}>{capability.logo}</div>
+                        </div>
+                      )}
+                      <span className="rounded-full border border-slate-200/80 bg-white/80 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-slate-500 backdrop-blur-sm transition-colors duration-300 group-hover:border-white/30 group-hover:bg-white/12 group-hover:text-white/80">
+                        {capability.category}
+                      </span>
+                    </div>
+                    <div className="relative mt-0 max-h-0 overflow-hidden opacity-0 transition-all duration-300 group-hover:mt-4 group-hover:max-h-40 group-hover:opacity-100">
+                      <h3 className="crm-card-heading text-xl font-semibold text-[color:var(--brand-blue)] transition-colors duration-300">
+                        {capability.title}
+                      </h3>
+                      <p className="crm-card-body mt-2 text-sm leading-5 text-slate-600 transition-colors duration-300">
+                        {capability.description}
+                      </p>
+                    </div>
+                  </motion.article>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+
+      </motion.section>
+
+      <motion.section
+        id="services"
+        className="mx-auto grid max-w-6xl gap-6 px-6 pb-16"
+        variants={staggerContainer}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+      >
+        <motion.div
+          variants={heroItemVariants}
+          className="flex flex-wrap items-center justify-between gap-4"
+        >
+          <div>
+            <p className="text-base font-semibold uppercase tracking-[0.2em] text-[color:var(--brand-blue)]">Services</p>
+            <h2 className="mt-2 text-3xl font-bold">What we deliver today</h2>
+          </div>
+          <a href="#services" className="text-sm font-semibold text-[color:var(--brand-blue)]">
+            View all services -&gt;
+          </a>
+        </motion.div>
+        <div className="mt-6 grid gap-4 md:grid-cols-3">
+          {deliveryOverview.map((item, index) => (
+            <motion.div
+              key={item.title}
+              variants={cardVariants}
+              custom={index}
+              className="crm-card-surface group rounded-xl p-5"
+            >
+              <h3 className="crm-card-heading text-xl font-semibold text-[color:var(--brand-blue)] transition-colors duration-300">
+                {item.title}
+              </h3>
+              <p className="crm-card-body mt-2 text-base leading-relaxed text-slate-700 transition-colors duration-300">
+                {item.description}
+              </p>
+            </motion.div>
+          ))}
+        </div>
+        <div className="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          {serviceCards.map((card, index) => (
+            <ServiceCard
+              key={card.title}
+              icon={card.icon}
+              variants={cardVariants}
+              custom={index}
+              title={card.title}
+              description={card.description}
+              highlights={card.highlights}
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+          ))}
         </div>
-      </main>
-    </div>
+      </motion.section>
+
+      <section id="technology" className="mx-auto max-w-6xl px-6 pb-16">
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.25 }}
+          transition={{ duration: 0.6 }}
+        >
+          <p className="text-base font-semibold uppercase tracking-[0.2em] text-[color:var(--brand-blue)]">Technology Stack</p>
+          <h2 className="mt-2 text-3xl font-bold">Tools we use to build resilient products</h2>
+          <p className="mt-3 max-w-3xl text-[color:var(--text-muted)]">
+            A proven mix of modern clouds, frameworks, data tools, and automation
+            practices gives us flexibility to ship faster and keep systems stable at
+            scale.
+          </p>
+        </motion.div>
+        <motion.div
+          className="mt-6 grid gap-4 md:grid-cols-2"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
+          {techStack.map((stack, index) => (
+              <motion.div
+                key={stack.title}
+                variants={cardVariants}
+                custom={index}
+              className="crm-card-surface group rounded-xl p-5"
+            >
+              <h3 className="crm-card-heading text-xl font-semibold text-[color:var(--brand-blue)] transition-colors duration-300">
+                {stack.title}
+              </h3>
+              <ul className="mt-3 flex flex-wrap gap-2">
+                {stack.technologies.map((tech) => (
+                  <li
+                    key={tech}
+                    className="crm-card-chip rounded-full border border-transparent bg-[#eaf1ff] px-3 py-1 text-base text-[color:var(--brand-blue)] transition-all duration-300"
+                  >
+                    {tech}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          ))}
+        </motion.div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-6 pb-16">
+        <motion.h2
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.25 }}
+          transition={{ duration: 0.6 }}
+          className="text-3xl font-bold"
+        >
+          Why choose iTAP
+        </motion.h2>
+        <motion.ul
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          className="mt-4 grid gap-3 text-[color:var(--text-muted)] md:grid-cols-3"
+        >
+          {whyCards.map((point, index) => (
+            <motion.li
+              key={point}
+              variants={cardVariants}
+              custom={index}
+              whileHover={{ y: -6 }}
+              transition={{ type: "spring", stiffness: 240, damping: 18 }}
+              className="crm-card-surface rounded-xl p-4 text-[color:var(--text-muted)]"
+            >
+              {point}
+            </motion.li>
+          ))}
+        </motion.ul>
+      </section>
+
+      <section id="about" className="mx-auto max-w-6xl px-6 pb-16">
+        <div id="company" className="h-0 w-0" />
+        <motion.h2
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.25 }}
+          transition={{ duration: 0.6 }}
+          className="text-3xl font-bold"
+        >
+          About iTAP Technologies
+        </motion.h2>
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, amount: 0.25 }}
+          transition={{ duration: 0.6, delay: 0.15 }}
+          className="mt-4 max-w-3xl text-[color:var(--text-muted)]"
+        >
+          We are a technology consulting and engineering company focused on helping organizations modernize their digital ecosystems and build scalable, resilient technology platforms. Our work centers around cloud transformation, data engineering, AI-driven analytics, and modern application architectures that enable businesses to innovate faster and operate more efficiently.
+        </motion.p>
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, amount: 0.25 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="mt-4 max-w-3xl text-[color:var(--text-muted)]"
+        >
+          In an increasingly digital world, organizations must continuously evolve their technology foundations to remain competitive. We partner with enterprises to design, build, and optimize modern digital platforms that support operational agility, data-driven decision making, and long-term business growth.
+        </motion.p>
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, amount: 0.25 }}
+          transition={{ duration: 0.6, delay: 0.25 }}
+          className="mt-4 max-w-3xl text-[color:var(--text-muted)]"
+        >
+          Our teams combine strong engineering expertise with modern technology practices to deliver solutions that are reliable, scalable, and future-ready.
+        </motion.p>
+      </section>
+
+      <section id="contact" className="mx-auto max-w-6xl px-6 pb-20">
+        <motion.h2
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.25 }}
+          transition={{ duration: 0.6 }}
+          className="text-3xl font-bold"
+        >
+          Contact
+        </motion.h2>
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, amount: 0.25 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="mt-3 text-[color:var(--text-muted)]"
+        >
+          Email: <a className="text-[color:var(--brand-blue)] hover:underline" href="mailto:itap@gmail.com">itap@gmail.com</a>
+        </motion.p>
+
+        <motion.form
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.6 }}
+          className="mt-6 grid max-w-xl gap-4"
+        >
+          <input
+            type="text"
+            placeholder="Your Name"
+            className="rounded-lg border border-[color:var(--brand-blue)] bg-white p-3 outline-none focus:border-[color:var(--brand-red)]"
+          />
+          <input
+            type="email"
+            placeholder="Your Email"
+            className="rounded-lg border border-[color:var(--brand-blue)] bg-white p-3 outline-none focus:border-[color:var(--brand-red)]"
+          />
+          <textarea
+            rows={4}
+            placeholder="Your Message"
+            className="rounded-lg border border-[color:var(--brand-blue)] bg-white p-3 outline-none focus:border-[color:var(--brand-red)]"
+          />
+          <motion.button
+            type="submit"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            transition={{ type: "spring", stiffness: 260, damping: 20 }}
+            className="brand-button rounded-lg px-5 py-3 font-semibold hover:opacity-90"
+          >
+            Send Message
+          </motion.button>
+        </motion.form>
+      </section>
+    </main>
   );
 }
+
+

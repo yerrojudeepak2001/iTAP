@@ -2,7 +2,22 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #1f2937;
+  --surface: #ffffff;
+  --surface-border: #dbe7ff;
+  --text-muted: #5b6475;
+  --brand-blue: #1f56b3;
+  --brand-blue-deep: #1749b7;
+  --brand-orange: #ff9800;
+  --brand-red: #f05a2a;
+  --brand-cyan: #2f9be8;
+  --brand-page-surface: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #f6f8ff 38%,
+    #ebf0ff 72%,
+    #e4ecff 100%
+  );
 }
 
 @theme inline {
@@ -12,15 +27,211 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html,
+body {
+  min-height: 100%;
+  background: var(--brand-page-surface);
 }
 
 body {
-  background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), "Segoe UI", sans-serif;
+}
+
+.itap-page-surface {
+  background: var(--brand-page-surface);
+}
+
+.brand-text {
+  background: linear-gradient(90deg, var(--brand-orange) 0%, var(--brand-red) 44%, var(--brand-blue) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.brand-button {
+  background: linear-gradient(90deg, var(--brand-orange), var(--brand-red));
+  color: #fff;
+}
+
+.brand-accent {
+  color: var(--brand-blue);
+  transition: color 0.2s ease;
+}
+
+.brand-accent:hover {
+  color: var(--brand-orange);
+}
+
+.brand-card {
+  border: 1px solid var(--surface-border);
+  background: var(--surface);
+  box-shadow: 0 8px 24px rgba(31, 86, 179, 0.08);
+  transition: background 220ms ease, color 220ms ease, border-color 220ms ease,
+    box-shadow 220ms ease, transform 220ms ease;
+}
+
+.shimmer {
+  animation: shimmerMove 3s linear infinite;
+}
+
+.service-step {
+  transition: background 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+}
+
+.service-step[open] {
+  background: linear-gradient(165deg, #1f56b3 0%, #f05a2a 52%, #ff9800 100%);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 18px 28px -22px rgba(31, 86, 179, 0.45);
+}
+
+.service-step[open] .service-step-kicker,
+.service-step[open] .service-step-title,
+.service-step[open] .service-step-list {
+  color: #ffffff;
+}
+
+.service-step[open] .service-step-icon {
+  color: #ffffff;
+  transform: rotate(45deg);
+}
+
+.service-step[open] .service-step-list li::marker {
+  color: #ffffff;
+}
+
+.service-step[open] .service-step-body {
+  border-top-color: rgba(255, 255, 255, 0.28);
+}
+
+.service-hero {
+  animation: serviceFadeIn 0.7s ease-out both;
+}
+
+.service-grid {
+  --animation-delay-step: 0.05s;
+  grid-auto-rows: 1fr;
+}
+
+.service-card-wrap {
+  animation: serviceFadeInUp 0.7s ease-out both;
+  animation-delay: var(--animation-delay-step);
+  align-self: stretch;
+  height: 100%;
+}
+
+.service-card {
+  transition: transform 240ms ease, box-shadow 240ms ease, background-color 240ms ease,
+    border-color 240ms ease, color 240ms ease;
+  will-change: transform;
+}
+
+.crm-card-surface {
+  border: 1px solid #bfdbfe;
+  background: #ffffff;
+  color: #334155;
+  box-shadow: 0 8px 24px rgba(31, 86, 179, 0.08);
+  transition: transform 240ms ease, box-shadow 240ms ease, background-color 240ms ease,
+    border-color 240ms ease, color 240ms ease;
+  will-change: transform;
+}
+
+.service-card:hover,
+.crm-card-surface:hover {
+  border-color: rgba(240, 90, 42, 0.5);
+  background: linear-gradient(
+    135deg,
+    rgba(31, 86, 179, 0.68) 0%,
+    rgba(23, 73, 183, 0.58) 34%,
+    rgba(240, 90, 42, 0.52) 72%,
+    rgba(255, 152, 0, 0.62) 100%
+  );
+  color: #f8fafc;
+  transform: translateY(-4px);
+  box-shadow: 0 24px 42px -22px rgba(31, 86, 179, 0.62);
+}
+
+.service-card:hover h2 {
+  color: #ffffff;
+  text-shadow: 0 1px 1px rgba(15, 23, 42, 0.28);
+}
+
+.service-card:hover li,
+.service-card:hover .service-card-item,
+.crm-card-surface:hover,
+.crm-card-surface:hover .crm-card-body {
+  color: #f8fafc;
+}
+
+.service-card:hover .service-card-item::marker {
+  color: #ffffff;
+}
+
+.service-card:hover li,
+.service-card:hover p,
+.service-card:hover .service-card-item {
+  text-shadow: 0 1px 1px rgba(15, 23, 42, 0.24);
+}
+
+.crm-card-surface:hover .crm-card-heading,
+.crm-card-surface:hover .crm-card-icon {
+  color: #ffffff;
+  text-shadow: 0 1px 1px rgba(15, 23, 42, 0.28);
+}
+
+.crm-card-surface:hover .crm-card-dot {
+  background: #ffffff;
+}
+
+.crm-card-surface:hover .crm-card-body,
+.crm-card-surface:hover li,
+.crm-card-surface:hover p {
+  color: #ffffff;
+  text-shadow: 0 1px 1px rgba(15, 23, 42, 0.24);
+}
+
+.crm-card-surface:hover .crm-card-chip {
+  border-color: rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  text-shadow: none;
+}
+
+.service-back {
+  animation: serviceFadeInUp 0.7s ease-out both;
+  animation-delay: 0.55s;
+}
+
+@keyframes shimmerMove {
+  0% {
+    background-position: -200% center;
+  }
+
+  100% {
+    background-position: 200% center;
+  }
+}
+
+@keyframes serviceFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes serviceFadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
