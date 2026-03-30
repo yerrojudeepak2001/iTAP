@@ -195,7 +195,7 @@ export default function Navbar() {
               onMouseEnter={closeDropdown}
             >
             <Image
-              src="/iTAP final logo.png"
+              src="/itap-logo.png"
               alt="iTAP logo"
               width={68}
               height={68}

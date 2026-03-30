@@ -17,7 +17,7 @@ export default function SplashScreen() {
         transition={{ duration: 0.8 }}
         className="flex flex-col items-center gap-4"
       >
-        <Image src="/iTAP final logo.png" alt="logo" width={180} height={180} />
+        <Image src="/itap-logo.png" alt="logo" width={180} height={180} />
         <p className="text-4xl font-bold leading-tight tracking-wide text-slate-900">
           <span className="bg-[linear-gradient(90deg,var(--brand-orange)_0%,var(--brand-red)_45%,var(--brand-blue)_100%)] bg-clip-text text-transparent">
             iTAP
