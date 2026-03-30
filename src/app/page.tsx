@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { type ReactNode, useEffect, useRef } from "react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
 
 import ServiceCard from "./components/ServiceCard";
 import metaLogo from "./meta.png";
@@ -110,6 +110,7 @@ type Capability = {
   description: string;
   logo: ReactNode;
   logoColorClassName: string;
+  logoScaleClassName: string;
   logoSurfaceClassName: string;
   compactLogo?: boolean;
 };
@@ -120,6 +121,7 @@ const capabilities: Capability[] = [
     category: "Social platforms",
     description: "Consumer-scale feeds, experimentation loops, and platform engineering patterns.",
     logoColorClassName: "",
+    logoScaleClassName: "h-[84%] w-[84%]",
     logoSurfaceClassName: "bg-[#eef4ff] ring-1 ring-[#0866ff]/12",
     compactLogo: true,
     logo: (
@@ -127,7 +129,7 @@ const capabilities: Capability[] = [
         <Image
           src={metaLogo}
           alt="Meta"
-          className="h-full w-full object-contain p-1"
+          className="h-full w-full object-contain"
           draggable={false}
         />
       </div>
@@ -138,11 +140,12 @@ const capabilities: Capability[] = [
     category: "Payments and fintech",
     description: "Secure transaction systems, payment network reliability, and data-driven customer experiences.",
     logoColorClassName: "",
+    logoScaleClassName: "h-[68%] w-[88%]",
     logoSurfaceClassName: "bg-[#fff4ef] ring-1 ring-[#eb001b]/15",
     compactLogo: true,
     logo: (
       <div className="flex h-full w-full items-center justify-center">
-        <svg viewBox="0 0 64 40" className="h-10 w-14" aria-hidden="true">
+        <svg viewBox="0 0 64 40" className="h-full w-full" aria-hidden="true">
           <circle cx="24" cy="20" r="12" fill="#EB001B" />
           <circle cx="40" cy="20" r="12" fill="#F79E1B" />
           <path
@@ -158,11 +161,12 @@ const capabilities: Capability[] = [
     category: "Product ecosystem",
     description: "Hardware-software integration with a strong quality bar and polished UX execution.",
     logoColorClassName: "text-black",
+    logoScaleClassName: "h-[76%] w-[76%]",
     logoSurfaceClassName: "bg-white ring-1 ring-[#e8e8ea]",
     compactLogo: true,
     logo: (
       <div className="flex h-full w-full items-center justify-center">
-        <svg viewBox="0 0 24 24" fill="currentColor" className="h-10 w-10" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="currentColor" className="h-full w-full" aria-hidden="true">
           <path
             d="M16.365 1.43c0 1.14-.418 2.193-1.244 3.16-.994 1.17-2.2 1.85-3.474 1.75-.02-.13-.03-.27-.03-.42 0-1.1.48-2.27 1.31-3.23.42-.49.95-.9 1.59-1.22.64-.32 1.25-.5 1.83-.54.02.16.03.32.03.5zm3.08 15.19c-.26.6-.57 1.18-.92 1.73-.47.73-.85 1.24-1.15 1.52-.45.44-.93.67-1.44.69-.37.02-.82-.1-1.34-.3-.53-.2-1.02-.3-1.47-.3-.48 0-.99.1-1.52.3-.53.2-.96.3-1.28.31-.5.02-.98-.2-1.43-.66-.33-.34-.71-.87-1.14-1.61-.46-.78-.84-1.69-1.13-2.73-.31-1.1-.47-2.16-.47-3.18 0-1.17.25-2.18.75-3.03.4-.68.94-1.22 1.63-1.62.69-.4 1.43-.6 2.22-.6.39 0 .91.12 1.56.35.65.23 1.06.35 1.23.35.13 0 .57-.14 1.32-.41.71-.25 1.3-.36 1.78-.33 1.3.1 2.28.62 2.95 1.55-1.16.7-1.73 1.68-1.72 2.93.01.97.35 1.78 1.02 2.43.31.3.66.53 1.05.7-.08.24-.17.48-.27.71z"
           />
@@ -175,13 +179,14 @@ const capabilities: Capability[] = [
     category: "Wealth management",
     description: "Advisor platforms, financial data workflows, and secure digital experiences for investment services.",
     logoColorClassName: "",
+    logoScaleClassName: "h-[80%] w-[80%]",
     logoSurfaceClassName: "bg-white ring-1 ring-[#102a67]/15",
     compactLogo: true,
     logo: (
       <div className="flex h-full w-full items-center justify-center">
         <svg
           viewBox="0 0 100 100"
-          className="h-14 w-14 text-[#102a67]"
+          className="h-full w-full text-[#102a67]"
           fill="currentColor"
           aria-hidden="true"
         >
@@ -197,14 +202,15 @@ const capabilities: Capability[] = [
     category: "Financial advisory",
     description: "Client advisory platforms, portfolio workflows, and trusted digital experiences for wealth planning.",
     logoColorClassName: "",
+    logoScaleClassName: "h-[50%] w-[76%]",
     logoSurfaceClassName: "bg-[#f6c31c] ring-1 ring-[#1f2430]/10",
     compactLogo: true,
     logo: (
       <div className="flex h-full w-full flex-col items-center justify-center leading-none text-[#111827]">
-        <span className="font-serif text-[0.92rem] tracking-[-0.05em]">
+        <span className="font-serif text-[0.85rem] tracking-[-0.05em]">
           Edward
         </span>
-        <span className="-mt-0.5 text-[0.98rem] font-black tracking-[-0.07em]">
+        <span className="-mt-0.5 text-[0.92rem] font-black tracking-[-0.07em]">
           Jones
         </span>
       </div>
@@ -215,11 +221,12 @@ const capabilities: Capability[] = [
     category: "Fintech platforms",
     description: "Tax, accounting, and financial workflow systems built for reliability, trust, and product clarity.",
     logoColorClassName: "",
+    logoScaleClassName: "h-[42%] w-[76%]",
     logoSurfaceClassName: "bg-[#f2f7ff] ring-1 ring-[#236CFF]/14",
     compactLogo: true,
     logo: (
       <div className="flex h-full w-full items-center justify-center">
-        <span className="text-base font-semibold tracking-[-0.04em] text-[#236CFF]">intuit</span>
+        <span className="text-sm font-semibold tracking-[-0.04em] text-[#236CFF]">intuit</span>
       </div>
     ),
   },
@@ -228,10 +235,11 @@ const capabilities: Capability[] = [
     category: "Telecom platforms",
     description: "Network-scale systems, customer operations, and resilient digital services for connected experiences.",
     logoColorClassName: "",
+    logoScaleClassName: "h-[72%] w-[98%]",
     logoSurfaceClassName: "bg-white ring-1 ring-slate-200",
     compactLogo: true,
     logo: (
-      <div className="flex h-full w-full items-center justify-center p-1">
+      <div className="flex h-full w-full items-center justify-center">
         <Image
           src={verizonLogo}
           alt="Verizon"
@@ -246,11 +254,12 @@ const capabilities: Capability[] = [
     category: "Healthcare platforms",
     description: "Care delivery systems, health data workflows, and secure digital experiences across modern healthcare operations.",
     logoColorClassName: "",
+    logoScaleClassName: "h-[66%] w-[66%]",
     logoSurfaceClassName: "bg-[#fff7f0] ring-1 ring-[#f28c28]/14",
     compactLogo: true,
     logo: (
       <div className="flex h-full w-full items-center justify-center">
-        <svg viewBox="0 0 100 100" className="h-12 w-12" aria-hidden="true">
+        <svg viewBox="0 0 100 100" className="h-full w-full" aria-hidden="true">
           <circle cx="50" cy="50" r="34" fill="none" stroke="#ff642b" strokeWidth="20" />
         </svg>
       </div>
@@ -324,6 +333,7 @@ const cardVariants = {
 export default function Home() {
   const capabilitiesTrackRef = useRef<HTMLDivElement | null>(null);
   const capabilitiesPausedRef = useRef(false);
+  const [activeCapabilityIndex, setActiveCapabilityIndex] = useState<number | null>(null);
 
   useEffect(() => {
     const track = capabilitiesTrackRef.current;
@@ -443,54 +453,84 @@ export default function Home() {
               ref={capabilitiesTrackRef}
               className="overflow-x-hidden pt-4 pb-4"
             >
-              <div className="flex w-max gap-5 pb-1">
-                {slidingCapabilities.map((capability, index) => (
-                  <motion.article
-                    key={`${capability.title}-${index}`}
-                    variants={cardVariants}
-                    custom={index % capabilities.length}
-                    whileHover={{
-                      scale: 1.06,
-                      y: 0,
-                      boxShadow: "0 24px 48px rgba(15,23,42,0.22)",
-                    }}
-                    transition={{ type: "spring", stiffness: 240, damping: 20 }}
-                    style={{ transformOrigin: "center top" }}
-                    className="crm-card-surface group relative z-0 flex min-h-[12.5rem] w-[15rem] flex-none flex-col overflow-visible rounded-[1.5rem] border border-transparent px-5 py-4 transition-all duration-300 group-hover:min-h-[15.5rem] group-hover:border-[color:var(--brand-blue)]/20 group-hover:bg-white/95 md:w-[16rem] hover:z-20"
-                  >
-                    <div className="pointer-events-none absolute inset-x-6 top-0 h-20 bg-[radial-gradient(circle_at_top,rgba(31,86,179,0.08),transparent_72%)]" />
-                    <div className="relative flex w-full items-center justify-between gap-4">
-                      {capability.compactLogo ? (
-                        <div
-                          className={`flex h-[4.25rem] w-[4.25rem] flex-none items-center justify-center rounded-[1.15rem] shadow-[0_8px_18px_rgba(15,23,42,0.06)] ${capability.logoSurfaceClassName}`}
+              <div className="flex w-max items-start gap-5 pb-1">
+                {slidingCapabilities.map((capability, index) => {
+                  const isActive = activeCapabilityIndex === index;
+
+                  return (
+                    <motion.article
+                      key={`${capability.title}-${index}`}
+                      variants={cardVariants}
+                      custom={index % capabilities.length}
+                      whileHover={{
+                        scale: 1.06,
+                        y: 0,
+                        boxShadow: "0 24px 48px rgba(15,23,42,0.22)",
+                      }}
+                      onHoverStart={() => setActiveCapabilityIndex(index)}
+                      onHoverEnd={() => setActiveCapabilityIndex(null)}
+                      transition={{ type: "spring", stiffness: 240, damping: 20 }}
+                      style={{ transformOrigin: "center top" }}
+                      className={`crm-card-surface relative z-0 flex w-[12.5rem] flex-none self-start flex-col overflow-visible rounded-[1.35rem] border border-transparent px-4 py-3 transition-all duration-300 md:w-[13.5rem] hover:z-20 ${
+                        isActive
+                          ? "min-h-[12rem] border-[color:var(--brand-blue)]/20 bg-white/95"
+                          : "min-h-[9.75rem]"
+                      }`}
+                    >
+                      <div className="pointer-events-none absolute inset-x-6 top-0 h-20 bg-[radial-gradient(circle_at_top,rgba(31,86,179,0.08),transparent_72%)]" />
+                      <div className="relative flex min-h-[4rem] w-full flex-col items-center justify-start">
+                        {capability.compactLogo ? (
+                          <div
+                            className={`mx-auto flex flex-col items-center justify-center rounded-xl transition-all duration-300 ease-in-out ${
+                              isActive ? "p-3.5 scale-100" : "p-2 scale-95"
+                            }`}
+                          >
+                            <div
+                              className={`flex items-center justify-center rounded-[1.15rem] shadow-[0_8px_18px_rgba(15,23,42,0.06)] transition-all duration-300 ${
+                                isActive ? "h-[3.85rem] w-[3.85rem]" : "h-[3.05rem] w-[3.05rem]"
+                              } ${capability.logoSurfaceClassName}`}
+                            >
+                              <div
+                                className={`flex items-center justify-center ${capability.logoScaleClassName} ${capability.logoColorClassName}`}
+                              >
+                                {capability.logo}
+                              </div>
+                            </div>
+                          </div>
+                        ) : (
+                          <div
+                            className={`flex h-12 min-w-[7.75rem] items-center rounded-2xl px-3 ${
+                              capability.title === "Meta" ? "justify-center" : "justify-start"
+                            } ${capability.logoSurfaceClassName}`}
+                          >
+                            <div className={capability.logoColorClassName}>{capability.logo}</div>
+                          </div>
+                        )}
+                        <span
+                          className={`mt-2 inline-flex min-h-10 items-center justify-center rounded-full border px-4 py-1.5 text-center text-[0.65rem] font-semibold uppercase leading-tight tracking-[0.18em] backdrop-blur-sm transition-all duration-300 ${
+                            isActive
+                              ? "max-w-full border-[color:var(--brand-blue)]/35 bg-white/80 text-[color:var(--brand-blue)]"
+                              : "max-w-[8.75rem] border-slate-200/80 bg-white/80 text-slate-500"
+                          }`}
                         >
-                          <div className={capability.logoColorClassName}>{capability.logo}</div>
-                        </div>
-                      ) : (
-                        <div
-                          className={`flex h-14 min-w-[8.75rem] items-center rounded-2xl px-4 ${
-                            capability.title === "Meta"
-                              ? "justify-center"
-                              : "justify-start"
-                          } ${capability.logoSurfaceClassName}`}
-                        >
-                          <div className={capability.logoColorClassName}>{capability.logo}</div>
-                        </div>
-                      )}
-                      <span className="rounded-full border border-slate-200/80 bg-white/80 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-slate-500 backdrop-blur-sm transition-colors duration-300 group-hover:border-white/30 group-hover:bg-white/12 group-hover:text-white/80">
-                        {capability.category}
-                      </span>
-                    </div>
-                    <div className="relative mt-0 max-h-0 overflow-hidden opacity-0 transition-all duration-300 group-hover:mt-4 group-hover:max-h-40 group-hover:opacity-100">
-                      <h3 className="crm-card-heading text-xl font-semibold text-[color:var(--brand-blue)] transition-colors duration-300">
-                        {capability.title}
-                      </h3>
-                      <p className="crm-card-body mt-2 text-sm leading-5 text-slate-600 transition-colors duration-300">
-                        {capability.description}
-                      </p>
-                    </div>
-                  </motion.article>
-                ))}
+                          {capability.category}
+                        </span>
+                      </div>
+                      <div
+                        className={`relative overflow-hidden transition-all duration-300 ${
+                          isActive ? "mt-3 max-h-32 opacity-100" : "mt-0 max-h-0 opacity-0"
+                        }`}
+                      >
+                        <h3 className="crm-card-heading text-base font-semibold text-[color:var(--brand-blue)] transition-colors duration-300">
+                          {capability.title}
+                        </h3>
+                        <p className="crm-card-body mt-1.5 text-xs leading-5 text-slate-600 transition-colors duration-300">
+                          {capability.description}
+                        </p>
+                      </div>
+                    </motion.article>
+                  );
+                })}
               </div>
             </div>
           </div>
