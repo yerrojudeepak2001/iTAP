@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { type ReactNode, useEffect, useRef, useState } from "react";
 
@@ -84,9 +85,21 @@ const serviceCards = [
 ];
 
 const whyCards = [
-  "Business-first delivery model",
-  "Outcome-based architecture",
-  "Continuous support and optimization",
+  {
+    title: "Business-first delivery model",
+    description:
+      "We align technical work with business priorities so delivery stays practical, measurable, and relevant to real operating goals.",
+  },
+  {
+    title: "Outcome-based architecture",
+    description:
+      "Our systems are shaped around reliability, scalability, and maintainability, not just feature delivery or short-term implementation speed.",
+  },
+  {
+    title: "Continuous support and optimization",
+    description:
+      "We continue improving platforms after launch through support, refinement, and steady optimization as business needs evolve.",
+  },
 ];
 
 const deliveryOverview = [
@@ -269,22 +282,21 @@ const capabilities: Capability[] = [
 
 const slidingCapabilities = [...capabilities, ...capabilities];
 
-const techStack = [
+const valueHighlights = [
   {
-    title: "Core Platforms",
-    technologies: ["AWS", "Azure", "GCP", "Vercel"],
+    title: "Business-aligned delivery",
+    description:
+      "Every engagement is shaped around business priorities, delivery goals, and practical outcomes instead of unnecessary complexity.",
   },
   {
-    title: "Frameworks",
-    technologies: ["Next.js", "React", "Node.js", "Spring Boot"],
+    title: "Flexible engagement models",
+    description:
+      "We support clients through dedicated teams, project-based work, long-term service partnerships, and evolving product initiatives.",
   },
   {
-    title: "Data & AI",
-    technologies: ["PostgreSQL", "Snowflake", "Python", "TensorFlow"],
-  },
-  {
-    title: "Operations",
-    technologies: ["Docker", "Kubernetes", "Terraform", "GitHub Actions"],
+    title: "Long-term value creation",
+    description:
+      "Our focus stays on systems, products, and platforms that continue to create value after launch through support, improvement, and growth.",
   },
 ];
 
@@ -400,7 +412,7 @@ export default function Home() {
         initial="hidden"
         animate="visible"
         variants={heroVariants}
-        className="relative mx-auto max-w-6xl overflow-visible px-6 pt-20 pb-10"
+        className="relative mx-auto max-w-6xl overflow-visible px-6 pt-16 pb-8"
       >
         <motion.p
           variants={heroItemVariants}
@@ -431,24 +443,28 @@ export default function Home() {
           >
             Explore Services
           </motion.a>
-          <motion.a
-            href="#contact"
+          <motion.div
             variants={heroItemVariants}
             whileHover={{ scale: 1.03 }}
             transition={{ type: "spring", stiffness: 260, damping: 18 }}
-            className="rounded-xl border border-[color:var(--brand-blue)] bg-white px-6 py-3 font-semibold text-[color:var(--brand-blue)] transition hover:bg-[color:var(--brand-blue)] hover:text-white"
           >
-            Get in touch
-          </motion.a>
+            <Link
+              href="/contact"
+              prefetch
+              className="inline-block rounded-xl border border-[color:var(--brand-blue)] bg-white px-6 py-3 font-semibold text-[color:var(--brand-blue)] transition hover:bg-[color:var(--brand-blue)] hover:text-white"
+            >
+              Get in touch
+            </Link>
+          </motion.div>
         </div>
 
-        <div className="relative mt-10">
+        <div className="relative mt-8">
           <p className="text-base font-semibold uppercase tracking-[0.2em] text-[color:var(--brand-blue)]">Core capabilities</p>
           <p className="mt-3 max-w-3xl text-lg text-slate-700">
             We build with patterns proven by the world&apos;s most demanding product and
             platform companies, then adapt them to practical enterprise delivery.
           </p>
-          <div className="relative mt-6 pt-7 pb-5">
+          <div className="relative mt-5 pt-5 pb-3">
             <div
               ref={capabilitiesTrackRef}
               className="overflow-x-hidden pt-4 pb-4"
@@ -540,7 +556,7 @@ export default function Home() {
 
       <motion.section
         id="services"
-        className="mx-auto grid max-w-6xl gap-6 px-6 pb-16"
+        className="mx-auto grid max-w-6xl gap-5 px-6 pb-12"
         variants={staggerContainer}
         initial="hidden"
         whileInView="visible"
@@ -575,7 +591,7 @@ export default function Home() {
             </motion.div>
           ))}
         </div>
-        <div className="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+        <div className="mt-5 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           {serviceCards.map((card, index) => (
             <ServiceCard
               key={card.title}
@@ -590,54 +606,44 @@ export default function Home() {
         </div>
       </motion.section>
 
-      <section id="technology" className="mx-auto max-w-6xl px-6 pb-16">
+      <section id="technology" className="mx-auto max-w-6xl px-6 pb-2">
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.25 }}
           transition={{ duration: 0.6 }}
         >
-          <p className="text-base font-semibold uppercase tracking-[0.2em] text-[color:var(--brand-blue)]">Technology Stack</p>
-          <h2 className="mt-2 text-3xl font-bold">Tools we use to build resilient products</h2>
+          <p className="text-base font-semibold uppercase tracking-[0.2em] text-[color:var(--brand-blue)]">What We Bring</p>
+          <h2 className="mt-2 text-3xl font-bold">A stronger foundation for long-term growth</h2>
           <p className="mt-3 max-w-3xl text-[color:var(--text-muted)]">
-            A proven mix of modern clouds, frameworks, data tools, and automation
-            practices gives us flexibility to ship faster and keep systems stable at
-            scale.
+            We work with organizations that need more than one-time execution, building a stronger base for delivery, operations, and future product growth.
           </p>
         </motion.div>
         <motion.div
-          className="mt-6 grid gap-4 md:grid-cols-2"
+          className="mt-6 grid gap-4 md:grid-cols-3"
           variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
+          initial="visible"
+          animate="visible"
         >
-          {techStack.map((stack, index) => (
+          {valueHighlights.map((principle, index) => (
               <motion.div
-                key={stack.title}
+                key={principle.title}
                 variants={cardVariants}
                 custom={index}
               className="crm-card-surface group rounded-xl p-5"
             >
               <h3 className="crm-card-heading text-xl font-semibold text-[color:var(--brand-blue)] transition-colors duration-300">
-                {stack.title}
+                {principle.title}
               </h3>
-              <ul className="mt-3 flex flex-wrap gap-2">
-                {stack.technologies.map((tech) => (
-                  <li
-                    key={tech}
-                    className="crm-card-chip rounded-full border border-transparent bg-[#eaf1ff] px-3 py-1 text-base text-[color:var(--brand-blue)] transition-all duration-300"
-                  >
-                    {tech}
-                  </li>
-                ))}
-              </ul>
+              <p className="crm-card-body mt-3 text-base leading-relaxed text-slate-700 transition-colors duration-300">
+                {principle.description}
+              </p>
             </motion.div>
           ))}
         </motion.div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 pb-16">
+      <section className="mx-auto max-w-6xl px-6 pt-6 pb-12">
         <motion.h2
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -656,20 +662,27 @@ export default function Home() {
         >
           {whyCards.map((point, index) => (
             <motion.li
-              key={point}
+              key={point.title}
               variants={cardVariants}
               custom={index}
-              whileHover={{ y: -6 }}
-              transition={{ type: "spring", stiffness: 240, damping: 18 }}
-              className="crm-card-surface rounded-xl p-4 text-[color:var(--text-muted)]"
+              className="group relative h-24 overflow-visible"
             >
-              {point}
+              <div className="crm-card-surface absolute inset-0 rounded-xl px-4 py-3 text-center text-[color:var(--text-muted)] transition-all duration-300 group-hover:z-10 group-hover:-translate-y-2 group-hover:scale-[1.05] group-hover:shadow-[0_22px_42px_rgba(31,86,179,0.16)] group-hover:min-h-[8.5rem]">
+                <div className="flex h-full flex-col items-center justify-center group-hover:justify-start">
+                  <h3 className="crm-card-heading text-lg font-bold leading-snug text-[color:var(--brand-blue)] transition-all duration-300">
+                    {point.title}
+                  </h3>
+                  <p className="crm-card-body mt-0 max-h-0 overflow-hidden text-center text-sm leading-6 text-slate-800 opacity-0 transition-all duration-300 group-hover:mt-2 group-hover:max-h-24 group-hover:opacity-100">
+                    {point.description}
+                  </p>
+                </div>
+              </div>
             </motion.li>
           ))}
         </motion.ul>
       </section>
 
-      <section id="about" className="mx-auto max-w-6xl px-6 pb-16">
+      <section id="about" className="mx-auto max-w-6xl px-6 pb-12">
         <div id="company" className="h-0 w-0" />
         <motion.h2
           initial={{ opacity: 0, y: 12 }}
@@ -687,7 +700,7 @@ export default function Home() {
           transition={{ duration: 0.6, delay: 0.15 }}
           className="mt-4 max-w-3xl text-[color:var(--text-muted)]"
         >
-          We are a technology consulting and engineering company focused on helping organizations modernize their digital ecosystems and build scalable, resilient technology platforms. Our work centers around cloud transformation, data engineering, AI-driven analytics, and modern application architectures that enable businesses to innovate faster and operate more efficiently.
+          We are a technology and engineering company focused on helping organizations modernize their digital ecosystems and build scalable, resilient platforms. Our work spans cloud transformation, data engineering, AI-driven analytics, modern application architectures, and product delivery that helps businesses move faster and operate more efficiently.
         </motion.p>
         <motion.p
           initial={{ opacity: 0 }}
@@ -696,7 +709,7 @@ export default function Home() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mt-4 max-w-3xl text-[color:var(--text-muted)]"
         >
-          In an increasingly digital world, organizations must continuously evolve their technology foundations to remain competitive. We partner with enterprises to design, build, and optimize modern digital platforms that support operational agility, data-driven decision making, and long-term business growth.
+          In an increasingly digital world, organizations must continuously evolve their technology foundations to remain competitive. We partner with enterprises to design, build, and optimize digital platforms that support operational agility, data-driven decision making, long-term business growth, and dependable service delivery.
         </motion.p>
         <motion.p
           initial={{ opacity: 0 }}
@@ -705,63 +718,10 @@ export default function Home() {
           transition={{ duration: 0.6, delay: 0.25 }}
           className="mt-4 max-w-3xl text-[color:var(--text-muted)]"
         >
-          Our teams combine strong engineering expertise with modern technology practices to deliver solutions that are reliable, scalable, and future-ready.
+          Alongside client work, we also invest in our own internal products and platform ideas, giving our teams hands-on experience building, shipping, and improving technology in real operating environments.
         </motion.p>
       </section>
 
-      <section id="contact" className="mx-auto max-w-6xl px-6 pb-20">
-        <motion.h2
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.25 }}
-          transition={{ duration: 0.6 }}
-          className="text-3xl font-bold"
-        >
-          Contact
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true, amount: 0.25 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="mt-3 text-[color:var(--text-muted)]"
-        >
-          Email: <a className="text-[color:var(--brand-blue)] hover:underline" href="mailto:itap@gmail.com">itap@gmail.com</a>
-        </motion.p>
-
-        <motion.form
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.6 }}
-          className="mt-6 grid max-w-xl gap-4"
-        >
-          <input
-            type="text"
-            placeholder="Your Name"
-            className="rounded-lg border border-[color:var(--brand-blue)] bg-white p-3 outline-none focus:border-[color:var(--brand-red)]"
-          />
-          <input
-            type="email"
-            placeholder="Your Email"
-            className="rounded-lg border border-[color:var(--brand-blue)] bg-white p-3 outline-none focus:border-[color:var(--brand-red)]"
-          />
-          <textarea
-            rows={4}
-            placeholder="Your Message"
-            className="rounded-lg border border-[color:var(--brand-blue)] bg-white p-3 outline-none focus:border-[color:var(--brand-red)]"
-          />
-          <motion.button
-            type="submit"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            transition={{ type: "spring", stiffness: 260, damping: 20 }}
-            className="brand-button rounded-lg px-5 py-3 font-semibold hover:opacity-90"
-          >
-            Send Message
-          </motion.button>
-        </motion.form>
-      </section>
     </main>
   );
 }

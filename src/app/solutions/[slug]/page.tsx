@@ -284,8 +284,8 @@ export default async function SolutionDetailPage({
       title={formatTitle(slug)}
       description={solution.description}
       sections={solution.sections}
-      backHref="/#solutions"
-      backLabel="Back to Solutions"
+      backHref="/"
+      backLabel="Back to Home"
     />
   );
 }
