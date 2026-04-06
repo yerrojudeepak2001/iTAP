@@ -12,7 +12,7 @@ const navMenuConfig = [
     href: "/services",
     label: "Services",
     items: [
-      "IT Consulting",
+      "IT Strategy",
       "Outsourcing",
       "CRM",
       "Custom Application Development",
@@ -110,6 +110,10 @@ function slugify(value: string) {
 }
 
 function buildDropdownItemHref(section: DropdownLink, item: string) {
+  if (section === "/services" && item === "IT Strategy") {
+    return "/services/it-consulting";
+  }
+
   return `${section}/${slugify(item)}`;
 }
 
@@ -195,7 +199,7 @@ export default function Navbar() {
               onMouseEnter={closeDropdown}
             >
             <Image
-              src="/itap-logo.png"
+              src="/iTAP final logo.png"
               alt="iTAP logo"
               width={68}
               height={68}

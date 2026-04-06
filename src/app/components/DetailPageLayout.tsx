@@ -12,6 +12,7 @@ type DetailPageLayoutProps = {
   title: string;
   subtitle?: string;
   description: string;
+  heroActions?: ReactNode;
   sections?: readonly DetailSection[];
   backHref?: string;
   backLabel?: string;
@@ -28,6 +29,7 @@ export default function DetailPageLayout({
   title,
   subtitle,
   description,
+  heroActions,
   sections = [],
   backHref,
   backLabel,
@@ -71,6 +73,7 @@ export default function DetailPageLayout({
           <p className="relative mt-5 max-w-3xl text-lg leading-relaxed text-[color:var(--text-muted)]">
             {description}
           </p>
+          {heroActions ? <div className="relative mt-6 flex flex-wrap gap-3">{heroActions}</div> : null}
         </header>
 
         {sections.length > 0 ? (

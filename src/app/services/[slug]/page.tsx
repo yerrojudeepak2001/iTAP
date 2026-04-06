@@ -18,10 +18,10 @@ type ServiceSection = {
 
 const serviceDetails: Record<string, ServiceSection> = {
   "it-consulting": {
-    title: "IT Consulting",
+    title: "IT Strategy",
     subtitle: "",
     description:
-      "We provide strategic IT consulting services that help organizations align technology with their business objectives. Our consultants analyze your existing infrastructure, identify opportunities for improvement, and recommend scalable solutions that enhance efficiency, security, and overall performance. By combining industry expertise with modern technologies, we guide businesses toward smarter technology decisions that support innovation and long-term growth.",
+      "We help organizations shape clear technology direction that aligns with business objectives. Our teams assess existing systems, identify opportunities for improvement, and recommend scalable approaches that enhance efficiency, security, and overall performance. By combining delivery experience with modern technologies, we help businesses make smarter technology decisions that support innovation, product growth, and long-term operations.",
     outcomes: [],
     whoBenefits: [],
     blocks: [
@@ -30,7 +30,7 @@ const serviceDetails: Record<string, ServiceSection> = {
         items: [
           "IT roadmap development aligned with business goals",
           "Technology stack evaluation and architecture recommendations",
-          "Digital transformation consulting for modern enterprises",
+          "Digital transformation planning for modern enterprises",
           "IT governance, compliance, and policy planning",
         ],
       },
@@ -491,7 +491,7 @@ const fallbackService: ServiceSection = {
   blocks: [
     {
       heading: "Scope",
-      items: ["Consultation and planning", "Execution planning and delivery", "Post-launch support"],
+      items: ["Discovery and planning", "Execution planning and delivery", "Post-launch support"],
     },
     {
       heading: "What to expect",
@@ -543,8 +543,8 @@ export default async function ServiceDetailPage({
       subtitle={service.subtitle}
       description={service.description}
       sections={contentSections}
-      backHref="/#services"
-      backLabel="Back to Services"
+      backHref="/"
+      backLabel="Back to Home"
     />
   );
 }

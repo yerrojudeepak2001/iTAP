@@ -11,7 +11,7 @@ type CompanyDetail = {
 const companyDetails: Record<string, CompanyDetail> = {
   "about-us": {
     description:
-      "We are a technology consulting and engineering company focused on helping organizations modernize their digital ecosystems and build scalable, resilient technology platforms. Our work centers around cloud transformation, data engineering, AI-driven analytics, and modern application architectures that enable businesses to innovate faster and operate more efficiently. In an increasingly digital world, organizations must continuously evolve their technology foundations to remain competitive. We partner with enterprises to design, build, and optimize modern digital platforms that support operational agility, data-driven decision making, and long-term business growth. Our teams combine strong engineering expertise with modern technology practices to deliver solutions that are reliable, scalable, and future-ready.",
+      "We are a technology and engineering company focused on helping organizations modernize their digital ecosystems and build scalable, resilient platforms. Our work spans cloud transformation, data engineering, AI-driven analytics, modern application architectures, and product delivery that helps businesses innovate faster and operate more efficiently. In an increasingly digital world, organizations must continuously evolve their technology foundations to remain competitive. We partner with enterprises to design, build, and optimize digital platforms that support operational agility, data-driven decision making, and long-term business growth. Alongside client delivery, we also invest in our own internal products and platform ideas, giving our teams direct experience building, shipping, and improving technology in real operating environments.",
     sections: [
       {
         title: "Digital Transformation",
@@ -233,8 +233,8 @@ export default async function CompanyDetailPage({
       title={formatTitle(slug)}
       description={company.description}
       sections={company.sections}
-      backHref="/#company"
-      backLabel="Back to Company"
+      backHref="/"
+      backLabel="Back to Home"
     />
   );
 }

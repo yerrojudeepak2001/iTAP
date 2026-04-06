@@ -299,7 +299,7 @@ const industryDetails: Record<string, IndustryDetail> = {
   },
   "professional-services": {
     description:
-      "Professional service organizations rely on efficient technology platforms to manage clients, projects, and operational workflows. We help consulting firms, legal organizations, and service providers modernize their digital infrastructure to improve collaboration, operational efficiency, and client engagement. Our solutions enable professional service firms to streamline project management, enhance service delivery, and leverage data-driven insights for better business outcomes.",
+      "Professional service organizations rely on efficient technology platforms to manage clients, projects, and operational workflows. We help advisory firms, legal organizations, and service providers modernize their digital infrastructure to improve collaboration, operational efficiency, and client engagement. Our solutions enable professional service firms to streamline project management, enhance service delivery, and leverage data-driven insights for better business outcomes.",
     sections: [
       {
         title: "Business Process Platforms",
@@ -404,8 +404,8 @@ export default async function IndustryDetailPage({
       title={formatTitle(slug)}
       description={industry.description}
       sections={industry.sections}
-      backHref="/#industries"
-      backLabel="Back to Industries"
+      backHref="/"
+      backLabel="Back to Home"
     />
   );
 }
