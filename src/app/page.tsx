@@ -149,6 +149,22 @@ const capabilities: Capability[] = [
     ),
   },
   {
+    title: "Yahoo",
+    category: "Consumer internet",
+    description: "High-scale content, advertising, and engagement systems shaped for digital audiences.",
+    logoColorClassName: "",
+    logoScaleClassName: "h-[30%] w-[58%]",
+    logoSurfaceClassName: "bg-[#6501d7] ring-1 ring-[#6501d7]/18",
+    compactLogo: true,
+    logo: (
+      <div className="flex h-full w-full items-center justify-center leading-none">
+        <span className="block -translate-y-[0.04em] whitespace-nowrap text-center text-[0.76rem] font-black lowercase tracking-[-0.03em] text-white">
+          yahoo!
+        </span>
+      </div>
+    ),
+  },
+  {
     title: "Mastercard",
     category: "Payments and fintech",
     description: "Secure transaction systems, payment network reliability, and data-driven customer experiences.",
