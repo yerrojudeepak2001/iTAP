@@ -152,7 +152,7 @@ export default function Footer() {
             <FooterTitle>Get In Touch</FooterTitle>
             <div className="mt-5 space-y-4">
               <ContactItem icon={<LocationIcon />} value="abc 123" />
-              <ContactItem icon={<MailIcon />} value="itap" />
+              <ContactItem icon={<MailIcon />} value="itap@gmail.com" />
               <ContactItem icon={<PhoneIcon />} value="9876543210" />
             </div>
           </div>
